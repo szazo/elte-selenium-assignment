@@ -27,4 +27,9 @@ dependencies {
 
 test {
      include '**/*Test*'
+
+    testLogging {
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+    }
 }
