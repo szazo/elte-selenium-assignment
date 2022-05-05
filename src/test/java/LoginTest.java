@@ -19,7 +19,7 @@ public class LoginTest {
 
   @Test
   public void testMe() {
-    //MainPage mainPage = new MainPage(this.driver);
+    MainPage mainPage = new MainPage(this.driver);
     
   }
 
