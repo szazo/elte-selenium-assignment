@@ -13,16 +13,14 @@ class LoginPage extends PageBase {
   public LoginPage(WebDriver driver) {
     super(driver);
 
-    if (!driver.getTitle().equals("Skillgo Moodle: Log in to the site")) {
-        throw new IllegalStateException("This is not the main page, current page is: " + driver.getCurrentUrl());
-    }
+    this.checkTitle("Skillgo Moodle: Log in to the site");
   }
 
   public DashboardPage loginAs(String username, String password) {
     this.enterUsername(username);
     this.enterPassword(password);
 
-    //   waitAndReturnElement(this.loginButtonBy).submit();
+    this.submitLogin();
 
     return new DashboardPage(this.driver);
   }
@@ -35,7 +33,7 @@ class LoginPage extends PageBase {
     waitAndReturnElement(this.passwordBy).sendKeys(password);    
   }
 
-  // public void gotoLogin() {
-  //   this.waitAndReturnElement(this.loginLinkBy).click();
-  // }
+  private void submitLogin() {
+    waitAndReturnElement(this.loginButtonBy).submit();
+  }
 }

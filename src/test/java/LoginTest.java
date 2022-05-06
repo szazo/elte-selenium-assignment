@@ -1,4 +1,8 @@
+import java.util.List;
+import java.util.Arrays;
 import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
@@ -6,36 +10,33 @@ import org.openqa.selenium.chrome.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.util.concurrent.TimeUnit;
 
-public class LoginTest {
+public class LoginTest extends CaseBase {
 
-  private WebDriver driver;
-  
-  @Before
-  public void setup() {
-    WebDriverManager.chromedriver().setup();
+  @Test
+  public void succeededLoginShouldNavigateToDashboard() {
+    // given, when
+    DashboardPage dashboard = this.login();
 
-    driver = new ChromeDriver();
-    driver.manage().window().maximize();
+    // then
+    String loggedInUserFullname = dashboard.getLoggedInUserFullname();
+    Assert.assertEquals("Zoltán Szarvas", loggedInUserFullname);
   }
 
   @Test
-  public void testMe() {
-    MainPage mainPage = new MainPage(this.driver);
-    LoginPage loginPage = mainPage.gotoLogin();
+  public void logoutShouldGoBackToMainPage() {
+    // given
+    DashboardPage dashboard = this.login();
 
-    DashboardPage dashboard = loginPage.loginAs("szazo", "");
+    // when
+    MainPage mainPage = dashboard.logout();
 
-    try {
-      System.out.println("Waiting...");
-      TimeUnit.SECONDS.sleep(5);
-    } catch (Exception ex) {
-    }
+    // then
+    assertEquals("You are not logged in. (Log in)", mainPage.getLoginText());
+    assertEquals("Skillgo Moodle", mainPage.getTitle());
   }
 
-  @After
-  public void close() {
-    if (driver != null) {
-      driver.quit();
-    }
+  private DashboardPage login() {
+    GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.driver);
+    return givenLoggedIn.login();
   }
 }
