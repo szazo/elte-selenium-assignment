@@ -21,9 +21,12 @@ public class LoginTest {
   @Test
   public void testMe() {
     MainPage mainPage = new MainPage(this.driver);
-    mainPage.gotoLogin();
+    LoginPage loginPage = mainPage.gotoLogin();
+
+    DashboardPage dashboard = loginPage.loginAs("szazo", "");
 
     try {
+      System.out.println("Waiting...");
       TimeUnit.SECONDS.sleep(5);
     } catch (Exception ex) {
     }

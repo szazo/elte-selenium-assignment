@@ -16,7 +16,9 @@ class MainPage extends PageBase {
     }
   }
 
-  public void gotoLogin() {
+  public LoginPage gotoLogin() {
     this.waitAndReturnElement(this.loginLinkBy).click();
+
+    return new LoginPage(this.driver);
   }
 }
