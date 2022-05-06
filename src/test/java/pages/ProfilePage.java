@@ -11,7 +11,7 @@ class ProfilePage extends PageBase {
 
   private By userProfileLocator = By.xpath("//div[@class='userprofile']");
   private By editProfileLinkLocator = new ByChained(userProfileLocator,
-                                                    By.xpath("//li[@class='editprofile']"));
+                                                    By.xpath("//li[@class='editprofile']//a"));
 
 
   public ProfilePage(WebDriver driver) {
