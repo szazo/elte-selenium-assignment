@@ -13,8 +13,8 @@ class UserDetails {
 
 class RegistrationPage extends PageBase {
 
-  private By registrationFormBy = By.xpath("//div[@role='main']//form");
-  private By usernameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='username']"));
+  private final By registrationFormBy = By.xpath("//div[@role='main']//form");
+  private final By usernameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='username']"));
   private By passwordBy = new ByChained(registrationFormBy, By.xpath("//input[@name='password']"));
   private By emailBy = new ByChained(registrationFormBy, By.xpath("//input[@name='email']"));
   private By email2By = new ByChained(registrationFormBy, By.xpath("//input[@name='email2']"));
@@ -29,7 +29,7 @@ class RegistrationPage extends PageBase {
     this.checkTitle("New account");
   }
 
-  public void register(UserDetails details) {
+  public RegistrationResultPage register(UserDetails details) {
     this.enterText(this.usernameBy, details.username);
     this.enterText(this.passwordBy, details.password);
     this.enterText(this.emailBy, details.email);
@@ -38,6 +38,8 @@ class RegistrationPage extends PageBase {
     this.enterText(this.lastnameBy, details.lastname);
 
     this.submitRegister();
+
+    return new RegistrationResultPage(this.driver, details.email);
   }
 
   private void enterText(By locator, String text) {

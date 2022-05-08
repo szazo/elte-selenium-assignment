@@ -36,6 +36,12 @@ class MainPage extends PageBase {
     return mainPage;
   }
 
+  public RegistrationConfirmedPage confirmUrl(String url) {
+      this.driver.get(url);
+
+      return new RegistrationConfirmedPage(this.driver);
+  }
+
   public List<String> getAvailableCourseNames() {
 
     List<WebElement> elements = this.waitAndReturnElements(availableCourseLinksLocator);

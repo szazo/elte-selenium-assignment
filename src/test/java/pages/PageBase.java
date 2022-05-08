@@ -16,7 +16,7 @@ class PageBase extends ComponentBase {
   protected void checkTitle(String expected) {
     if (!driver.getTitle().equals(expected)) {
       throw new IllegalStateException("This is not the page for " + this.getClass().getName() +
-                                      ", current page is: " + driver.getCurrentUrl());
+                                      ", current page is: " + driver.getCurrentUrl() + "; title: " + driver.getTitle());
     }
   }
 }
