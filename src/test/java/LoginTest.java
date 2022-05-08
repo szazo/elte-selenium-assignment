@@ -1,17 +1,9 @@
-import java.util.List;
-import java.util.Arrays;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 import pages.DashboardPage;
 import pages.MainPage;
-
-import java.util.concurrent.TimeUnit;
 
 public class LoginTest extends CaseBase {
 
@@ -21,7 +13,7 @@ public class LoginTest extends CaseBase {
     DashboardPage dashboard = this.login();
 
     // then
-    String loggedInUserFullName = dashboard.getLoggedInUserFullname();
+    String loggedInUserFullName = dashboard.getLoggedInUserFullName();
     Assert.assertNotEquals("", loggedInUserFullName);
   }
 

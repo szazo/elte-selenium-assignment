@@ -46,7 +46,7 @@ public class RegistrationTest extends CaseBase {
     DashboardPage dashboardPage = confirmedPage.clickContinueButton();
 
     // then
-    Assert.assertEquals(details.firstname + " " + details.lastname, dashboardPage.getLoggedInUserFullname());
+    Assert.assertEquals(details.firstname + " " + details.lastname, dashboardPage.getLoggedInUserFullName());
 
     Thread.sleep(4000);
   }

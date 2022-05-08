@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
-class ProfilePage extends PageBase {
+public class ProfilePage extends PageBase {
 
   private By userProfileBy = By.xpath("//div[@class='userprofile']");
   private By editProfileLinkBy = new ByChained(userProfileBy,
@@ -42,11 +42,11 @@ class ProfilePage extends PageBase {
        (String.format("//div[@class='profile_tree']//li[@class='contentnode'] " +
                       "//dt[text()='%s']/following-sibling::dd", label)));
   }
-}
 
-class ProfileDetails {
-  String fullName;
-  String description;
-  String country;
-  String city;
+  public class ProfileDetails {
+    public String fullName;
+    public String description;
+    public String country;
+    public String city;
+  }
 }

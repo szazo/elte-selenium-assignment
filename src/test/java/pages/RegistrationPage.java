@@ -61,7 +61,7 @@ public class RegistrationPage extends PageBase {
   //   waitAndReturnElement(this.loginButtonBy).submit();
   // }
 
-  public class UserDetails {
+  public static class UserDetails {
     public String username;
     public String password;
     public String email;

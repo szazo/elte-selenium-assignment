@@ -10,7 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Select;
 
-class EditProfilePage extends PageBase {
+public class EditProfilePage extends PageBase {
 
   private By formBy = By.xpath("//div[@role='main']/form[@class='mform']");
   private By firstnameBy = new ByChained(formBy, By.xpath("//input[@name='firstname']"));
@@ -51,14 +51,14 @@ class EditProfilePage extends PageBase {
 
     return countryOptions.get(countryIndex).getText();
   }
-}
 
-class UpdateProfileDetails {
-  public String firstname;
-  public String lastname;
-  public String city;
-  public String description;
+  public static class UpdateProfileDetails {
+    public String firstname;
+    public String lastname;
+    public String city;
+    public String description;
 
-  // out parameter with the name of the selected country
-  public String outSelectedCountry;
+    // out parameter with the name of the selected country
+    public String outSelectedCountry;
+  }
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.*;
 
 import java.util.Random;
 import java.util.UUID;
@@ -24,7 +25,7 @@ public class UpdateProfileTest extends CaseBase {
 
     // when
     Random rand = new Random();
-    UpdateProfileDetails details = new UpdateProfileDetails() {{
+    EditProfilePage.UpdateProfileDetails details = new EditProfilePage.UpdateProfileDetails() {{
       firstname = randomString("First", 5);
       lastname = randomString("Last", 5);
       city = randomString("City", 5);
@@ -35,7 +36,7 @@ public class UpdateProfileTest extends CaseBase {
 
     System.out.println(details.outSelectedCountry);
 
-    ProfileDetails detailsAfterEdit = profilePageAfterEdit.getProfileDetails();
+    ProfilePage.ProfileDetails detailsAfterEdit = profilePageAfterEdit.getProfileDetails();
     System.out.println(detailsAfterEdit);
 
     assertEquals(details.firstname + " " + details.lastname, detailsAfterEdit.fullName);
