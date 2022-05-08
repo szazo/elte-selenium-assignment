@@ -17,6 +17,22 @@ class ComponentBase {
     this.wait = new WebDriverWait(driver, 5);
   }
 
+  protected void enterText(By locator, String text) {
+    enterText(locator, text, false);
+  }
+
+  protected void enterText(By locator, String text, boolean clear) {
+    WebElement element = waitAndReturnElement(locator);
+    if (clear) {
+      element.clear();
+    }
+    element.sendKeys(text);
+  }
+
+  protected String getText(By locator) {
+    return waitAndReturnElement(locator).getText();
+  }
+
   protected WebElement waitAndReturnElement(By locator) {
     this.waitForElementVisibility(locator);
     return this.driver.findElement(locator);

@@ -42,10 +42,6 @@ class RegistrationPage extends PageBase {
     return new RegistrationResultPage(this.driver, details.email);
   }
 
-  private void enterText(By locator, String text) {
-    waitAndReturnElement(locator).sendKeys(text);
-  }
-
   private void submitRegister() {
     waitAndReturnElement(this.registerButtonBy).submit();
   }

@@ -18,20 +18,12 @@ class LoginPage extends PageBase {
   }
 
   public DashboardPage loginAs(String username, String password) {
-    this.enterUsername(username);
-    this.enterPassword(password);
+    this.enterText(this.usernameBy, username);
+    this.enterText(this.passwordBy, password);
 
     this.submitLogin();
 
     return new DashboardPage(this.driver);
-  }
-
-  private void enterUsername(String username) {
-    waitAndReturnElement(this.usernameBy).sendKeys(username);
-  }
-
-  private void enterPassword(String password) {
-    waitAndReturnElement(this.passwordBy).sendKeys(password);    
   }
 
   private void submitLogin() {
