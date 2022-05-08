@@ -12,14 +12,14 @@ import org.openqa.selenium.support.ui.Select;
 
 public class EditProfilePage extends PageBase {
 
-  private By formBy = By.xpath("//div[@role='main']/form[@class='mform']");
-  private By firstnameBy = new ByChained(formBy, By.xpath("//input[@name='firstname']"));
-  private By lastnameBy = new ByChained(formBy, By.xpath("//input[@name='lastname']"));
-  private By cityBy = new ByChained(formBy, By.xpath("//input[@name='city']"));
-  private By descriptionBy = new ByChained(formBy, By.xpath("//div[@id='id_description_editoreditable']"));
-  private By countryBy = new ByChained(formBy, By.xpath("//select[@name='country']"));
+  private final By formBy = By.xpath("//div[@role='main']/form[@class='mform']");
+  private final By firstnameBy = new ByChained(formBy, By.xpath("//input[@name='firstname']"));
+  private final By lastnameBy = new ByChained(formBy, By.xpath("//input[@name='lastname']"));
+  private final By cityBy = new ByChained(formBy, By.xpath("//input[@name='city']"));
+  private final By descriptionBy = new ByChained(formBy, By.xpath("//div[@id='id_description_editoreditable']"));
+  private final By countryBy = new ByChained(formBy, By.xpath("//select[@name='country']"));
 
-  private By updateButtonBy = new ByChained(formBy, By.xpath("//input[@name='submitbutton' and @type='submit']"));
+  private final By updateButtonBy = new ByChained(formBy, By.xpath("//input[@name='submitbutton' and @type='submit']"));
 
   public EditProfilePage(WebDriver driver) {
     super(driver);

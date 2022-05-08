@@ -11,12 +11,12 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class MainPage extends PageBase {
 
-  private By userMenuLocator = By.xpath("//div[@class='usermenu']");
-  private By loginLocator = new ByChained(userMenuLocator,
+  private final By userMenuLocator = By.xpath("//div[@class='usermenu']");
+  private final By loginLocator = new ByChained(userMenuLocator,
                                           By.xpath("span[@class='login']"));
-  private By loginLinkLocator = new ByChained(loginLocator, By.xpath("a"));
+  private final By loginLinkLocator = new ByChained(loginLocator, By.xpath("a"));
 
-  private By availableCourseLinksLocator = By.xpath
+  private final By availableCourseLinksLocator = By.xpath
     ("//div[contains(@class, 'courses') and contains(@class, 'frontpage-course-list-all')]" +
      "//h3[@class='coursename']/a");
 

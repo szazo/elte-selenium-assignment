@@ -7,13 +7,13 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class ProfilePage extends PageBase {
 
-  private By userProfileBy = By.xpath("//div[@class='userprofile']");
-  private By editProfileLinkBy = new ByChained(userProfileBy,
+  private final By userProfileBy = By.xpath("//div[@class='userprofile']");
+  private final By editProfileLinkBy = new ByChained(userProfileBy,
                                                     By.xpath("//li[@class='editprofile']//a"));
-  private By fullNameBy = By.xpath("//header[@id='page-header']//div[@class='page-header-headings']/h1");
-  private By descriptionBy = new ByChained(userProfileBy, By.xpath("//div[@class='description']"));
-  private By countryBy = profileTreeValueXPath("Country");
-  private By cityBy = profileTreeValueXPath("City/town");
+  private final By fullNameBy = By.xpath("//header[@id='page-header']//div[@class='page-header-headings']/h1");
+  private final By descriptionBy = new ByChained(userProfileBy, By.xpath("//div[@class='description']"));
+  private final By countryBy = profileTreeValueXPath("Country");
+  private final By cityBy = profileTreeValueXPath("City/town");
 
   public ProfilePage(WebDriver driver) {
     super(driver);

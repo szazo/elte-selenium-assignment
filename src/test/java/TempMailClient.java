@@ -26,8 +26,8 @@ import javax.xml.datatype.DatatypeConstants;
 
 class TempMailClient {
 
-  private String host;
-  private String key;
+  private final String host;
+  private final String key;
 
   public TempMailClient(String host, String key) {
     this.host = host;
@@ -101,7 +101,6 @@ class TempMailClient {
         break;
       }
 
-      System.out.println("EMAIL: " + emailObject.toString());
       Email email = new Email() {{
         id = emailObject.getString("mail_id");
         subject = emailObject.getString("mail_subject");
@@ -109,7 +108,6 @@ class TempMailClient {
         text = emailObject.getString("mail_text");
         html = emailObject.getString("mail_html");
       }};
-      System.out.println(email.subject);
       emails.add(email);
     }
 

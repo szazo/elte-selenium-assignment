@@ -7,11 +7,11 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class LoginPage extends PageBase {
 
-  private By loginFormBy = By.xpath("//form[@id='login']");
-  private By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));
-  private By passwordBy = new ByChained(loginFormBy, By.xpath("//input[@id='password']"));
-  private By loginButtonBy = new ByChained(loginFormBy, By.xpath("button[@id='loginbtn']"));
-  private By registrationButtonBy = By.xpath("//form[@id='signup']/button[@type='submit']");
+  private final By loginFormBy = By.xpath("//form[@id='login']");
+  private final By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));
+  private final By passwordBy = new ByChained(loginFormBy, By.xpath("//input[@id='password']"));
+  private final By loginButtonBy = new ByChained(loginFormBy, By.xpath("button[@id='loginbtn']"));
+  private final By registrationButtonBy = By.xpath("//form[@id='signup']/button[@type='submit']");
 
   public LoginPage(WebDriver driver) {
     super(driver);

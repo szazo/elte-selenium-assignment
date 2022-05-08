@@ -11,22 +11,22 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 class NavigationBar extends ComponentBase {
 
-  private By rootLocator = By.xpath("//nav[contains(@class, 'navbar')]");
-  private By actionMenuToggleLocator =
+  private final By rootLocator = By.xpath("//nav[contains(@class, 'navbar')]");
+  private final By actionMenuToggleLocator =
     new ByChained(rootLocator,
                 By.xpath("//div[@class='usermenu']//a[contains(@class, 'dropdown-toggle')]"));
-  private By userTextLocator = new ByChained(actionMenuToggleLocator,
+  private final By userTextLocator = new ByChained(actionMenuToggleLocator,
                                              By.xpath("//span[contains(@class, 'usertext')]"));
 
-  private By dropdownMenuLocator =
+  private final By dropdownMenuLocator =
     new ByChained(rootLocator,
                   By.xpath("//div[contains(@class, 'dropdown-menu')]"));
 
-  private By logoutMenuItemLocator =
+  private final By logoutMenuItemLocator =
     new ByChained(dropdownMenuLocator,
                   By.xpath("a[@data-title='logout,moodle']"));
 
-  private By profileMenuItemLocator =
+  private final By profileMenuItemLocator =
     new ByChained(dropdownMenuLocator,
                   By.xpath("a[@data-title='profile,moodle']"));
   

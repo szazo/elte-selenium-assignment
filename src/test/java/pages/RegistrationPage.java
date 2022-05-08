@@ -9,13 +9,13 @@ public class RegistrationPage extends PageBase {
 
   private final By registrationFormBy = By.xpath("//div[@role='main']//form");
   private final By usernameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='username']"));
-  private By passwordBy = new ByChained(registrationFormBy, By.xpath("//input[@name='password']"));
-  private By emailBy = new ByChained(registrationFormBy, By.xpath("//input[@name='email']"));
-  private By email2By = new ByChained(registrationFormBy, By.xpath("//input[@name='email2']"));
-  private By firstnameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='firstname']"));
-  private By lastnameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='lastname']"));
+  private final By passwordBy = new ByChained(registrationFormBy, By.xpath("//input[@name='password']"));
+  private final By emailBy = new ByChained(registrationFormBy, By.xpath("//input[@name='email']"));
+  private final By email2By = new ByChained(registrationFormBy, By.xpath("//input[@name='email2']"));
+  private final By firstnameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='firstname']"));
+  private final By lastnameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='lastname']"));
 
-  private By registerButtonBy = new ByChained(registrationFormBy, By.xpath("//input[@name='submitbutton']"));
+  private final By registerButtonBy = new ByChained(registrationFormBy, By.xpath("//input[@name='submitbutton']"));
 
   public RegistrationPage(WebDriver driver) {
     super(driver);
