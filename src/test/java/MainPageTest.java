@@ -7,13 +7,13 @@ import java.util.List;
 
 public class MainPageTest extends CaseBase {
 
-  @Test
-  public void mainPageShouldContainOnlyHamstersCourse() {
-    // when
-    MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl(), this.driver);
+    @Test
+    public void mainPageShouldContainOnlyHamstersCourse() {
+        // when
+        MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl(), this.driver);
 
-    // then
-    List<String> courseNames = mainPage.getAvailableCourseNames();
-    Assert.assertEquals(Arrays.asList("Hamsters"), courseNames);
-  }
+        // then
+        List<String> courseNames = mainPage.getAvailableCourseNames();
+        Assert.assertEquals(Arrays.asList("Hamsters"), courseNames);
+    }
 }

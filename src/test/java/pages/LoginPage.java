@@ -7,33 +7,33 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 public class LoginPage extends PageBase {
 
-  private final By loginFormBy = By.xpath("//form[@id='login']");
-  private final By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));
-  private final By passwordBy = new ByChained(loginFormBy, By.xpath("//input[@id='password']"));
-  private final By loginButtonBy = new ByChained(loginFormBy, By.xpath("button[@id='loginbtn']"));
-  private final By registrationButtonBy = By.xpath("//form[@id='signup']/button[@type='submit']");
+    private final By loginFormBy = By.xpath("//form[@id='login']");
+    private final By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));
+    private final By passwordBy = new ByChained(loginFormBy, By.xpath("//input[@id='password']"));
+    private final By loginButtonBy = new ByChained(loginFormBy, By.xpath("button[@id='loginbtn']"));
+    private final By registrationButtonBy = By.xpath("//form[@id='signup']/button[@type='submit']");
 
-  public LoginPage(WebDriver driver) {
-    super(driver);
+    public LoginPage(WebDriver driver) {
+        super(driver);
 
-    this.checkTitle("Skillgo Moodle: Log in to the site");
-  }
+        this.checkTitle("Skillgo Moodle: Log in to the site");
+    }
 
-  public DashboardPage loginAs(String username, String password) {
-    this.enterText(this.usernameBy, username);
-    this.enterText(this.passwordBy, password);
+    public DashboardPage loginAs(String username, String password) {
+        this.enterText(this.usernameBy, username);
+        this.enterText(this.passwordBy, password);
 
-    this.submitLogin();
+        this.submitLogin();
 
-    return new DashboardPage(this.driver);
-  }
+        return new DashboardPage(this.driver);
+    }
 
-  private void submitLogin() {
-    waitAndReturnElement(this.loginButtonBy).submit();
-  }
+    private void submitLogin() {
+        waitAndReturnElement(this.loginButtonBy).submit();
+    }
 
-  public RegistrationPage gotoRegistration() {
-    waitAndReturnElement(this.registrationButtonBy).click();
-    return new RegistrationPage(this.driver);
-  }
+    public RegistrationPage gotoRegistration() {
+        waitAndReturnElement(this.registrationButtonBy).click();
+        return new RegistrationPage(this.driver);
+    }
 }

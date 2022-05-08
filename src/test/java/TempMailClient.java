@@ -13,114 +13,115 @@ import java.util.*;
 
 class TempMailClient {
 
-  private final String host;
-  private final String key;
+    private final String host;
+    private final String key;
 
-  public TempMailClient(String host, String key) {
-    this.host = host;
-    this.key = key;
-  }
-
-  public String generateEmailAddress() throws UnirestException {
-
-    HttpResponse<JsonNode> response
-            = Unirest.get(this.url("domains/"))
-            .headers(this.headers())
-            .asJson();
-
-    JSONArray jsonArray = response.getBody().getArray();
-
-    // select random domain
-    List<String> domainList = new ArrayList<>();
-    for (Object item : jsonArray) {
-      domainList.add((String) item);
+    public TempMailClient(String host, String key) {
+        this.host = host;
+        this.key = key;
     }
 
-    Random rand = new Random();
-    String domain = domainList.get(rand.nextInt(domainList.size()));
-    int index = rand.nextInt(10000);
+    public String generateEmailAddress() throws UnirestException {
 
-    return String.format("test%05d%s", index, domain);
-  }
+        HttpResponse<JsonNode> response
+                = Unirest.get(this.url("domains/"))
+                .headers(this.headers())
+                .asJson();
 
-  public Email waitForEmailBySubject(String emailAddress, String subject, int timeoutMs) throws NoSuchAlgorithmException, UnirestException, TimeoutException {
-    String md5Hash = this.md5Hash(emailAddress);
+        JSONArray jsonArray = response.getBody().getArray();
 
-    long start = System.currentTimeMillis();
-    while (true) {
-      List<Email> emails = this.getEmails(md5Hash);
-      for (Email email : emails) {
-        if (email.subject.equals(subject)) {
-          return email;
+        // select random domain
+        List<String> domainList = new ArrayList<>();
+        for (Object item : jsonArray) {
+            domainList.add((String) item);
         }
-      }
 
-      if (System.currentTimeMillis() - start > timeoutMs) {
-        throw new TimeoutException(String.format("waitForEmailBySubject condition not met within %s ms", timeoutMs));
-      }
-    }
-  }
-  private List<Email> getEmails(String emailMd5) throws UnirestException {
+        Random rand = new Random();
+        String domain = domainList.get(rand.nextInt(domainList.size()));
+        int index = rand.nextInt(10000);
 
-    HttpResponse<JsonNode> response
-            = Unirest.get(this.url(String.format("mail/id/%s/", emailMd5)))
-            .headers(this.headers())
-            .asJson();
-    JSONArray jsonArray = response.getBody().getArray();
-
-    List<Email> emails = new ArrayList<>();
-    for (Object item : jsonArray) {
-      JSONObject emailObject = (JSONObject) item;
-
-      if (emailObject.has("error")) {
-        break;
-      }
-
-      Email email = new Email() {{
-        id = emailObject.getString("mail_id");
-        subject = emailObject.getString("mail_subject");
-        from = emailObject.getString("mail_from");
-        text = emailObject.getString("mail_text");
-        html = emailObject.getString("mail_html");
-      }};
-      emails.add(email);
+        return String.format("test%05d%s", index, domain);
     }
 
-    return emails;
-    //HttpResponse<String> response = Unirest.get("https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/5c0bce9a727b8c8f7ee3cd7a03a5491c/")
-     //       .header("X-RapidAPI-Host", "privatix-temp-mail-v1.p.rapidapi.com")
-      //      .header("X-RapidAPI-Key", "4bc1c48a83mshfdd317857f55020p1678cfjsn531bb38cb008")
-       //     .asString();
-  }
+    public Email waitForEmailBySubject(String emailAddress, String subject, int timeoutMs) throws NoSuchAlgorithmException, UnirestException, TimeoutException {
+        String md5Hash = this.md5Hash(emailAddress);
 
-  private String md5Hash(String input) throws NoSuchAlgorithmException {
-    MessageDigest md5 = MessageDigest.getInstance("MD5");
-    BigInteger bigInteger = new BigInteger(1, md5.digest(input.getBytes()));
-    String md5Hash = bigInteger.toString(16);
-    while (md5Hash.length() < 32) {
-      md5Hash = "0" + md5Hash;
+        long start = System.currentTimeMillis();
+        while (true) {
+            List<Email> emails = this.getEmails(md5Hash);
+            for (Email email : emails) {
+                if (email.subject.equals(subject)) {
+                    return email;
+                }
+            }
+
+            if (System.currentTimeMillis() - start > timeoutMs) {
+                throw new TimeoutException(String.format("waitForEmailBySubject condition not met within %s ms", timeoutMs));
+            }
+        }
     }
 
-    return md5Hash;
-  }
+    private List<Email> getEmails(String emailMd5) throws UnirestException {
 
-  private Map<String, String> headers() {
-    Map<String, String> headers = new HashMap<>();
-    headers.put("X-RapidAPI-Host", this.host);
-    headers.put("X-RapidAPI-Key", this.key);
+        HttpResponse<JsonNode> response
+                = Unirest.get(this.url(String.format("mail/id/%s/", emailMd5)))
+                .headers(this.headers())
+                .asJson();
+        JSONArray jsonArray = response.getBody().getArray();
 
-    return headers;
-  }
+        List<Email> emails = new ArrayList<>();
+        for (Object item : jsonArray) {
+            JSONObject emailObject = (JSONObject) item;
 
-  private String url(String suffix) {
-    return String.format("https://%s/request/%s", this.host, suffix);
-  }
+            if (emailObject.has("error")) {
+                break;
+            }
 
-  public static class Email {
-    String id;
-    String subject;
-    String from;
-    String text;
-    String html;
-  }
+            Email email = new Email() {{
+                id = emailObject.getString("mail_id");
+                subject = emailObject.getString("mail_subject");
+                from = emailObject.getString("mail_from");
+                text = emailObject.getString("mail_text");
+                html = emailObject.getString("mail_html");
+            }};
+            emails.add(email);
+        }
+
+        return emails;
+        //HttpResponse<String> response = Unirest.get("https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/5c0bce9a727b8c8f7ee3cd7a03a5491c/")
+        //       .header("X-RapidAPI-Host", "privatix-temp-mail-v1.p.rapidapi.com")
+        //      .header("X-RapidAPI-Key", "4bc1c48a83mshfdd317857f55020p1678cfjsn531bb38cb008")
+        //     .asString();
+    }
+
+    private String md5Hash(String input) throws NoSuchAlgorithmException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        BigInteger bigInteger = new BigInteger(1, md5.digest(input.getBytes()));
+        String md5Hash = bigInteger.toString(16);
+        while (md5Hash.length() < 32) {
+            md5Hash = "0" + md5Hash;
+        }
+
+        return md5Hash;
+    }
+
+    private Map<String, String> headers() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("X-RapidAPI-Host", this.host);
+        headers.put("X-RapidAPI-Key", this.key);
+
+        return headers;
+    }
+
+    private String url(String suffix) {
+        return String.format("https://%s/request/%s", this.host, suffix);
+    }
+
+    public static class Email {
+        String id;
+        String subject;
+        String from;
+        String text;
+        String html;
+    }
 }

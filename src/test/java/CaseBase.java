@@ -11,57 +11,57 @@ import java.util.Random;
 
 public class CaseBase {
 
-  protected WebDriver driver;
+    protected WebDriver driver;
 
-  @BeforeClass
-  public static void loadConfig() {
-    Dotenv.configure().systemProperties().load();
-  }
-
-  @Before
-  public void setup() {
-    WebDriverManager.chromedriver().setup();
-
-    driver = new ChromeDriver();
-    driver.manage().window().maximize();
-  }
-
-  @After
-  public void close() {
-    if (driver != null) {
-      driver.quit();
+    @BeforeClass
+    public static void loadConfig() {
+        Dotenv.configure().systemProperties().load();
     }
-  }
 
-  protected DashboardPage login() {
-    GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.rootUrl(),
-                                                    this.username(), this.password(),
-                                                    this.driver);
-    return givenLoggedIn.login();
-  }
+    @Before
+    public void setup() {
+        WebDriverManager.chromedriver().setup();
 
-  protected String randomString(String prefix, int randomLength) {
-    Random rand = new Random();
-    return String.format("%s%0" + randomLength + "d", prefix, rand.nextInt((int) Math.pow(10, randomLength)));
-  }
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
 
-  protected String rootUrl() {
-    return System.getProperty("TEST_ROOT_URL");
-  }
+    @After
+    public void close() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
-  protected String tempMailHost() {
-    return System.getProperty("TEST_TEMPMAIL_HOST");
-  }
+    protected DashboardPage login() {
+        GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.rootUrl(),
+                this.username(), this.password(),
+                this.driver);
+        return givenLoggedIn.login();
+    }
 
-  protected String tempMailApiKey() {
-    return System.getProperty("TEST_TEMPMAIL_APIKEY");
-  }
+    protected String randomString(String prefix, int randomLength) {
+        Random rand = new Random();
+        return String.format("%s%0" + randomLength + "d", prefix, rand.nextInt((int) Math.pow(10, randomLength)));
+    }
 
-  private String username() {
-    return System.getProperty("TEST_USERNAME");
-  }
+    protected String rootUrl() {
+        return System.getProperty("TEST_ROOT_URL");
+    }
 
-  private String password() {
-    return System.getProperty("TEST_PASSWORD");
-  }
+    protected String tempMailHost() {
+        return System.getProperty("TEST_TEMPMAIL_HOST");
+    }
+
+    protected String tempMailApiKey() {
+        return System.getProperty("TEST_TEMPMAIL_APIKEY");
+    }
+
+    private String username() {
+        return System.getProperty("TEST_USERNAME");
+    }
+
+    private String password() {
+        return System.getProperty("TEST_PASSWORD");
+    }
 }

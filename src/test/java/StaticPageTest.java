@@ -3,9 +3,6 @@ import pages.StaticPage;
 
 import static org.junit.Assert.assertEquals;
 
-record StaticPageCase(String url, String expectedTitle) {
-}
-
 public class StaticPageTest extends CaseBase {
 
     @Test
@@ -21,10 +18,20 @@ public class StaticPageTest extends CaseBase {
 
         // when
         for (StaticPageCase testCase : cases) {
-            StaticPage page = new StaticPage(this.rootUrl() + testCase.url(), driver);
+            StaticPage page = new StaticPage(this.rootUrl() + testCase.url, driver);
             String title = page.getTitle();
 
-            assertEquals(testCase.expectedTitle(), title);
+            assertEquals(testCase.expectedTitle, title);
         }
     }
+}
+
+class StaticPageCase {
+    public StaticPageCase(String url, String expectedTitle) {
+        this.url = url;
+        this.expectedTitle = expectedTitle;
+    }
+
+    public final String url;
+    public final String expectedTitle;
 }

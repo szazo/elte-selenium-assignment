@@ -7,72 +7,72 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 
 class NavigationBar extends ComponentBase {
 
-  private final By rootLocator = By.xpath("//nav[contains(@class, 'navbar')]");
-  private final By actionMenuToggleLocator =
-    new ByChained(rootLocator,
-                By.xpath("//div[@class='usermenu']//a[contains(@class, 'dropdown-toggle')]"));
-  private final By userTextLocator = new ByChained(actionMenuToggleLocator,
-                                             By.xpath("//span[contains(@class, 'usertext')]"));
+    private final By rootLocator = By.xpath("//nav[contains(@class, 'navbar')]");
+    private final By actionMenuToggleLocator =
+            new ByChained(rootLocator,
+                    By.xpath("//div[@class='usermenu']//a[contains(@class, 'dropdown-toggle')]"));
+    private final By userTextLocator = new ByChained(actionMenuToggleLocator,
+            By.xpath("//span[contains(@class, 'usertext')]"));
 
-  private final By dropdownMenuLocator =
-    new ByChained(rootLocator,
-                  By.xpath("//div[contains(@class, 'dropdown-menu')]"));
+    private final By dropdownMenuLocator =
+            new ByChained(rootLocator,
+                    By.xpath("//div[contains(@class, 'dropdown-menu')]"));
 
-  private final By logoutMenuItemLocator =
-    new ByChained(dropdownMenuLocator,
-                  By.xpath("a[@data-title='logout,moodle']"));
+    private final By logoutMenuItemLocator =
+            new ByChained(dropdownMenuLocator,
+                    By.xpath("a[@data-title='logout,moodle']"));
 
-  private final By profileMenuItemLocator =
-    new ByChained(dropdownMenuLocator,
-                  By.xpath("a[@data-title='profile,moodle']"));
-  
-  protected NavigationBar(WebDriver driver) {
-    super(driver);
-  }
+    private final By profileMenuItemLocator =
+            new ByChained(dropdownMenuLocator,
+                    By.xpath("a[@data-title='profile,moodle']"));
 
-  public String getLoggedInUserFullname() {
-    WebElement userText = this.waitAndReturnElement(this.userTextLocator);
-    return userText.getText();
-  }
+    protected NavigationBar(WebDriver driver) {
+        super(driver);
+    }
 
-  public void toggleUserMenuAndLogout() {
-    this.toggleUserMenu();
+    public String getLoggedInUserFullname() {
+        WebElement userText = this.waitAndReturnElement(this.userTextLocator);
+        return userText.getText();
+    }
 
-    this.waitAndReturnElement(this.logoutMenuItemLocator).click();
-  }
+    public void toggleUserMenuAndLogout() {
+        this.toggleUserMenu();
 
-  public void toggleUserMenuAndShowProfile() {
-    this.toggleUserMenu();
+        this.waitAndReturnElement(this.logoutMenuItemLocator).click();
+    }
 
-    this.waitAndReturnElement(this.profileMenuItemLocator).click();
-  }
+    public void toggleUserMenuAndShowProfile() {
+        this.toggleUserMenu();
 
-  private void toggleUserMenu() {
-    WebElement userMenuToggle = this.waitAndReturnElement(this.userTextLocator);
-    userMenuToggle.click();
-  }
+        this.waitAndReturnElement(this.profileMenuItemLocator).click();
+    }
 
-  // public List<String> getAvailableCourseNames() {
+    private void toggleUserMenu() {
+        WebElement userMenuToggle = this.waitAndReturnElement(this.userTextLocator);
+        userMenuToggle.click();
+    }
 
-  //   List<WebElement> elements = this.waitAndReturnElements(availableCourseLinksLocator);
+    // public List<String> getAvailableCourseNames() {
 
-  //   ArrayList<String> courseNames = new ArrayList<>();
-  //   for (WebElement element : elements) {
-  //     courseNames.add(element.getText());
-  //   }
+    //   List<WebElement> elements = this.waitAndReturnElements(availableCourseLinksLocator);
 
-  //   return courseNames;
-  // }
+    //   ArrayList<String> courseNames = new ArrayList<>();
+    //   for (WebElement element : elements) {
+    //     courseNames.add(element.getText());
+    //   }
 
-  // private void navigateToMainPage() {
-  //   this.driver.get("https://skillgo.io/moodle");
+    //   return courseNames;
+    // }
 
-  //   this.checkTitle("Skillgo Moodle");
-  // }
+    // private void navigateToMainPage() {
+    //   this.driver.get("https://skillgo.io/moodle");
 
-  // public LoginPage gotoLogin() {
-  //   this.waitAndReturnElement(this.loginLinkLocator).click();
+    //   this.checkTitle("Skillgo Moodle");
+    // }
 
-  //   return new LoginPage(this.driver);
-  // }
+    // public LoginPage gotoLogin() {
+    //   this.waitAndReturnElement(this.loginLinkLocator).click();
+
+    //   return new LoginPage(this.driver);
+    // }
 }
