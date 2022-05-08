@@ -1,227 +1,88 @@
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
-import java.math.BigInteger;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import pages.*;
 
-import org.apache.commons.compress.utils.BitInputStream;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.*;
-
-import static org.junit.Assert.assertEquals;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.mashape.unirest.http.*;
-import com.mashape.unirest.http.exceptions.*;
-
-import javax.xml.datatype.DatatypeConstants;
-
 public class RegistrationTest extends CaseBase {
 
-  // @Test
-  // public void readEmails() throws Exception {
-  //   TempMailClient tempMailClient = new TempMailClient("privatix-temp-mail-v1.p.rapidapi.com", "4bc1c48a83mshfdd317857f55020p1678cfjsn531bb38cb008");
+  TempMailClient tempMailClient;
+  
+  @Before
+  public void setup() {
+    this.tempMailClient = new TempMailClient(tempMailHost(), tempMailApiKey());
+  }
 
-  //   String address = "test02345@mailkept.com";
-
-  //   TempMailClient.Email email = tempMailClient.waitForEmailBySubject(address, "Skillgo Moodle: account confirmation", 5000);
-  //   System.out.println(email.text);
-
-  //   Pattern pattern = Pattern.compile("^\\s*(https.*)\\s*$", Pattern.MULTILINE);
-  //   Matcher matcher = pattern.matcher(email.text);
-
-  //   Assert.assertTrue(matcher.find());
-
-  //   String confirmUrl = matcher.group(0).trim();
-  //   System.out.println("confirmURL" + confirmUrl);
-  // }
-
+  @Ignore
   @Test
   public void shouldRegister() throws Exception {
     // given
-    TempMailClient tempMailClient = new TempMailClient(tempMailHost(), tempMailApiKey());
     String emailAddress = tempMailClient.generateEmailAddress();
 
-    System.out.println("Generated email address:" + emailAddress);
-
-    MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl(), this.driver);
-    LoginPage loginPage = mainPage.gotoLogin();
-    RegistrationPage registrationPage = loginPage.gotoRegistration();
-
-    String generatedPassword = "Pw1+" + UUID.randomUUID();
-    System.out.println("PASSWORD:" + generatedPassword);
-
-    UserDetails details = new UserDetails() {{
+    RegistrationPage.UserDetails details = new RegistrationPage.UserDetails() {{
       username = emailAddress;
-      password = generatedPassword;
+      password = randomString("Pw+", 5);
       email = emailAddress;
       firstname = randomString("First", 5);
       lastname = randomString("Last", 5);
     }};
+    RegistrationPage registrationPage = this.navigateToRegistrationPage();
 
+    // when register
     RegistrationResultPage resultPage = registrationPage.register(details);
 
-    // then
     String confirmText = resultPage.getConfirmText();
     Assert.assertTrue(confirmText.contains(emailAddress));
 
-    MainPage mainPageAfterRegister = resultPage.clickContinueButton();
+    // when waiting for email and read confirm url
+    String confirmUrl = this.waitForEmailAndExtractConfirmUrl(emailAddress);
 
     // confirm
-    TempMailClient.Email email = tempMailClient.waitForEmailBySubject(emailAddress, "Skillgo Moodle: account confirmation", 5000);
-    System.out.println(email.text);
-
-    Pattern pattern = Pattern.compile("^\\s*(https.*)\\s*$", Pattern.MULTILINE);
-    Matcher matcher = pattern.matcher(email.text);
-
-    Assert.assertTrue(matcher.find());
-
-    String confirmUrl = matcher.group(0).trim();
-    RegistrationConfirmedPage confirmedPage = mainPageAfterRegister.confirmUrl(confirmUrl);
+    RegistrationConfirmedPage confirmedPage = confirm(resultPage, confirmUrl);
     Assert.assertTrue(confirmedPage.getConfirmText().contains("Your registration has been confirmed"));
     DashboardPage dashboardPage = confirmedPage.clickContinueButton();
 
-    // check logged in
+    // then
     Assert.assertEquals(details.firstname + " " + details.lastname, dashboardPage.getLoggedInUserFullname());
-    // when
-    Thread.sleep(2000);
+
+    Thread.sleep(4000);
   }
 
-//   @Test
-//   public void generateEmail() throws UnirestException, NoSuchAlgorithmException {
-//     Map<String, String> headers = new HashMap<>();
-//     headers.put("X-RapidAPI-Host", "privatix-temp-mail-v1.p.rapidapi.com");
-//     headers.put("X-RapidAPI-Key", "4bc1c48a83mshfdd317857f55020p1678cfjsn531bb38cb008");
-    
-//     String url = "https://privatix-temp-mail-v1.p.rapidapi.com/request/domains/";
-    
-//     HttpResponse<JsonNode> response
-//       = Unirest.get(url)
-//       .headers(headers)
-//       .asJson();
+  private RegistrationPage navigateToRegistrationPage() {
+    MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl(), this.driver);
+    LoginPage loginPage = mainPage.gotoLogin();
+    RegistrationPage registrationPage = loginPage.gotoRegistration();
 
-//     List<String> domainList = new ArrayList<>();
-//     JSONArray jsonArray = response.getBody().getArray();
-//     for (Object item : jsonArray) {
-//       domainList.add((String) item);
-//     }
+    return registrationPage;
+  }
 
-//     Random rand = new Random();
-//     String domain = domainList.get(rand.nextInt(domainList.size()));
-//     int index = rand.nextInt(10000);
+  private String waitForEmailAndExtractConfirmUrl(String emailAddress) throws Exception {
+    TempMailClient.Email email = tempMailClient.waitForEmailBySubject(emailAddress,
+                                                                      "Skillgo Moodle: account confirmation",
+                                                                      5000);
 
-//     String emailAddress = String.format("test%05d@%s", index, domain);
+    String confirmUrl = this.extractConfirmUrl(email.text);
+    return confirmUrl;
+  }
 
-//     // generate md5 hash
-//       MessageDigest md5 = MessageDigest.getInstance("MD5");
-//       BigInteger bigInteger = new BigInteger(1, md5.digest(emailAddress.getBytes()));
-//       String md5Hash = bigInteger.toString(16);
-//       while (md5Hash.length() < 32) {
-//         md5Hash = "0" + md5Hash;
-//       }
+  private RegistrationConfirmedPage confirm(RegistrationResultPage resultPage, String confirmUrl) {
+    MainPage mainPageAfterRegister = resultPage.clickContinueButton();
+    RegistrationConfirmedPage confirmedPage = mainPageAfterRegister.confirmUrl(confirmUrl);
+    return confirmedPage;
+  }
 
-//     System.out.println(domainList);
-//     System.out.println(index);
-//     System.out.println(emailAddress);
-//     System.out.println(md5Hash);
+  private String extractConfirmUrl(String message) {
+    Pattern pattern = Pattern.compile("^\\s*(https.*)\\s*$", Pattern.MULTILINE);
+    Matcher matcher = pattern.matcher(message);
 
-// //     JSONArray domainNodes = response.getBody().getArray();
-// //     List<String> domainList = new ArrayList<>();
-// //     //domainNodes
+    if (!matcher.find()) {
+      throw new RuntimeException("URL could not be extracted from message: " + message);
+    }
 
-// // SONArray issueNodes = response.getBody().getArray();
-// //         issueNodes.forEach(issueNode -> {
-// //             JSONObject issue = (JSONObject) issueNode;
-// //             String closedOn = issue.getString("closed_at");
-// //             if (since.compareTo(closedOn) < 0) {
-// //                 if (!isIssueExcluded(issue)) {
-// //                     rval.add(issue);
-// //                 } else {
-// //                     System.out.println("Skipping issue (excluded): " + issue.getString("title"));
-// //                 }
-// //             } else {
-// //                 System.out.println("Skipping issue (old release): " + issue.getString("title"));
-// //             }
-// //         });
-    
-//     System.out.println(response);
-    
-//   }
-
-//   @Test
-//   public void shouldUnirest() throws UnirestException {
-
-//     Map<String, String> headers = new HashMap<>();
-//     headers.put("Api-Token", "f018e2f257e17056ed2ae61ac73432ec");
-
-//     Map<String, Object> fields = new HashMap<>();
-//     fields.put("name", "new inbox");
-
-//     String url = String.format("https://mailtrap.io/api/v1/companies/%s/inboxes", "42");
-//   System.out.println(url);
-    
-//     String response
-//       = Unirest.post(url)
-//       .headers(headers)
-//       .fields(fields)
-//       .asString()
-//       .getBody();
-
-//     System.out.println(response);
-    
-//     // Map<String, String> headers = new HashMap<>();
-//     // headers.put("accept", "application/json");
-//     // headers.put("Authorization", "Bearer 5a9ce37b3100004f00ab5154");
-
-//     // Map<String, Object> fields = new HashMap<>();
-//     // fields.put("name", "Sam Baeldung");
-//     // fields.put("id", "PSP123");
-
-//     // HttpResponse<JsonNode> jsonResponse 
-//     //   = Unirest.put("http://www.mocky.io/v2/5a9ce7853100002a00ab515e")
-//     //   .headers(headers).fields(fields)
-//     //   .asJson();
-    
-    
-//     // HttpResponse<JsonNode> jsonResponse =
-//     //   Unirest.get("http://www.mocky.io/v2/5a9ce37b3100004f00ab5154")
-//     //   .header("accept", "application/json").queryString("apiKey", "123")
-//     //   .asJson();
-
-//   }
-  
-  // @Test
-  // public void succeededLoginShouldNavigateToDashboard() {
-  //   // given, when
-  //   DashboardPage dashboard = this.login();
-
-  //   // then
-  //   String loggedInUserFullname = dashboard.getLoggedInUserFullname();
-  //   Assert.assertEquals("Zoltán Szarvas", loggedInUserFullname);
-  // }
-
-  // @Test
-  // public void logoutShouldGoBackToMainPage() {
-  //   // given
-  //   DashboardPage dashboard = this.login();
-
-  //   // when
-  //   MainPage mainPage = dashboard.logout();
-
-  //   // then
-  //   assertEquals("You are not logged in. (Log in)", mainPage.getLoginText());
-  //   assertEquals("Skillgo Moodle", mainPage.getTitle());
-  // }
-
-  // private DashboardPage login() {
-  //   GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.driver);
-  //   return givenLoggedIn.login();
-  // }
+    String confirmUrl = matcher.group(0).trim();
+    return confirmUrl;
+  }
 }

@@ -1,9 +1,11 @@
+package pages;
+
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
-class DashboardPage extends PageBase {
+public class DashboardPage extends PageBase {
 
   public DashboardPage(WebDriver driver) {
     super(driver);

@@ -8,6 +8,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pages.DashboardPage;
+import pages.MainPage;
+
 import java.util.concurrent.TimeUnit;
 
 public class LoginTest extends CaseBase {

@@ -1,6 +1,7 @@
 import java.util.List;
 
 import org.junit.*;
+import pages.StaticPage;
 
 import static org.junit.Assert.assertEquals;
 

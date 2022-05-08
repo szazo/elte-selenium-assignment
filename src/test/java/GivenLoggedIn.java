@@ -1,11 +1,14 @@
 import org.openqa.selenium.WebDriver;
+import pages.DashboardPage;
+import pages.LoginPage;
+import pages.MainPage;
 
 class GivenLoggedIn {
 
-  private WebDriver driver;
-  private String rootUrl;
-  private String username;
-  private String password;
+  private final WebDriver driver;
+  private final String rootUrl;
+  private final String username;
+  private final String password;
 
   public GivenLoggedIn(String rootUrl, String username, String password, WebDriver driver) {
     this.rootUrl = rootUrl;
@@ -18,8 +21,6 @@ class GivenLoggedIn {
     MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl, this.driver);
     LoginPage loginPage = mainPage.gotoLogin();
 
-    DashboardPage dashboard = loginPage.loginAs(this.username, this.password);
-
-    return dashboard;
+    return loginPage.loginAs(this.username, this.password);
   }
 }

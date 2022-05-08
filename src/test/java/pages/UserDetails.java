@@ -1,17 +1,11 @@
+package pages;
+
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
-class UserDetails {
-  public String username;
-  public String password;
-  public String email;
-  public String firstname;
-  public String lastname;
-}
-
-class RegistrationPage extends PageBase {
+public class RegistrationPage extends PageBase {
 
   private final By registrationFormBy = By.xpath("//div[@role='main']//form");
   private final By usernameBy = new ByChained(registrationFormBy, By.xpath("//input[@name='username']"));
@@ -66,4 +60,12 @@ class RegistrationPage extends PageBase {
   // private void submitLogin() {
   //   waitAndReturnElement(this.loginButtonBy).submit();
   // }
+
+  public class UserDetails {
+    public String username;
+    public String password;
+    public String email;
+    public String firstname;
+    public String lastname;
+  }
 }

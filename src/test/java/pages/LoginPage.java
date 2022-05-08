@@ -1,9 +1,11 @@
+package pages;
+
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.pagefactory.ByChained;
 
-class LoginPage extends PageBase {
+public class LoginPage extends PageBase {
 
   private By loginFormBy = By.xpath("//form[@id='login']");
   private By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));

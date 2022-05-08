@@ -1,15 +1,13 @@
-import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.*;
-
-import static org.junit.Assert.assertEquals;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import pages.DashboardPage;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class CaseBase {
 
