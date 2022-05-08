@@ -61,6 +61,12 @@ class TempMailClient {
                 throw new TimeoutException
                   (String.format("waitForEmailBySubject condition not met within %s ms", timeoutMs));
             }
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

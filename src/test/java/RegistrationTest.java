@@ -60,7 +60,7 @@ public class RegistrationTest extends CaseBase {
     private String waitForEmailAndExtractConfirmUrl(String emailAddress) throws Exception {
         TempMailClient.Email email = tempMailClient.waitForEmailBySubject(emailAddress,
                 "Skillgo Moodle: account confirmation",
-                5000);
+                15000);
 
         String confirmUrl = this.extractConfirmUrl(email.text);
         return confirmUrl;
