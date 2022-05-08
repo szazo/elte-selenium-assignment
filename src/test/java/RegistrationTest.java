@@ -13,10 +13,10 @@ public class RegistrationTest extends CaseBase {
 
     @Before
     public void setup() {
+        super.setup();
         this.tempMailClient = new TempMailClient(tempMailHost(), tempMailApiKey());
     }
 
-    @Ignore
     @Test
     public void shouldRegisterUsingConfirmation() throws Exception {
         // given
