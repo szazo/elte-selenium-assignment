@@ -1,9 +1,0 @@
-* Login
-* Change profile
-** Textarea content
-** Dropdown
-** Radio button
-** 
-* Logout
-* Check data on static page
-* Multiple static page test???
