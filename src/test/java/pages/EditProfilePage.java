@@ -15,7 +15,6 @@ public class EditProfilePage extends PageBase {
     private final By firstnameBy = new ByChained(formBy, By.xpath("//input[@name='firstname']"));
     private final By lastnameBy = new ByChained(formBy, By.xpath("//input[@name='lastname']"));
     private final By cityBy = new ByChained(formBy, By.xpath("//input[@name='city']"));
-    private final By descriptionBy = new ByChained(formBy, By.xpath("//div[@id='id_description_editoreditable']"));
     private final By countryBy = new ByChained(formBy, By.xpath("//select[@name='country']"));
 
     private final By updateButtonBy = new ByChained(formBy, By.xpath("//input[@name='submitbutton' and @type='submit']"));
@@ -30,7 +29,6 @@ public class EditProfilePage extends PageBase {
         this.enterText(this.firstnameBy, details.firstname, true);
         this.enterText(this.lastnameBy, details.lastname, true);
         this.enterText(this.cityBy, details.city, true);
-        this.enterText(this.descriptionBy, details.description, true);
         String countryName = this.selectRandomCountry();
 
         // return the randomly selected country's name
@@ -55,8 +53,7 @@ public class EditProfilePage extends PageBase {
         public String firstname;
         public String lastname;
         public String city;
-        public String description;
-
+ 
         // out parameter with the name of the selected country
         public String outSelectedCountry;
     }

@@ -10,7 +10,6 @@ public class ProfilePage extends PageBase {
     private final By editProfileLinkBy = new ByChained(userProfileBy,
             By.xpath("//li[@class='editprofile']//a"));
     private final By fullNameBy = By.xpath("//header[@id='page-header']//div[@class='page-header-headings']/h1");
-    private final By descriptionBy = new ByChained(userProfileBy, By.xpath("//div[@class='description']"));
     private final By countryBy = profileTreeValueXPath("Country");
     private final By cityBy = profileTreeValueXPath("City/town");
 
@@ -28,7 +27,6 @@ public class ProfilePage extends PageBase {
 
         return new ProfileDetails() {{
             fullName = getText(fullNameBy);
-            description = getText(descriptionBy);
             country = getText(countryBy);
             city = getText(cityBy);
         }};
@@ -44,7 +42,6 @@ public class ProfilePage extends PageBase {
 
     public static class ProfileDetails {
         public String fullName;
-        public String description;
         public String country;
         public String city;
     }
