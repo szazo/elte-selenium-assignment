@@ -15,7 +15,7 @@ public class MainPageTest extends CaseBase {
   @Test
   public void mainPageShouldContainOnlyHamstersCourse() {
     // when
-    MainPage mainPage = MainPage.navigateToMainPage(this.driver);
+    MainPage mainPage = MainPage.navigateToMainPage(this.rootUrl(), this.driver);
 
     // then
     List<String> courseNames = mainPage.getAvailableCourseNames();

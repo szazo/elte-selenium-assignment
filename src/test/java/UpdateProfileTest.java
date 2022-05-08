@@ -68,9 +68,4 @@ public class UpdateProfileTest extends CaseBase {
   //   assertEquals("You are not logged in. (Log in)", mainPage.getLoginText());
   //   assertEquals("Skillgo Moodle", mainPage.getTitle());
   // }
-
-  private DashboardPage login() {
-    GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.driver);
-    return givenLoggedIn.login();
-  }
 }

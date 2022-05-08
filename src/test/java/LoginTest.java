@@ -13,13 +13,13 @@ import java.util.concurrent.TimeUnit;
 public class LoginTest extends CaseBase {
 
   @Test
-  public void succeededLoginShouldNavigateToDashboard() {
+  public void loginShouldNavigateToDashboardWhenSucceeded() {
     // given, when
     DashboardPage dashboard = this.login();
 
     // then
-    String loggedInUserFullname = dashboard.getLoggedInUserFullname();
-    Assert.assertEquals("Zoltán Szarvas", loggedInUserFullname);
+    String loggedInUserFullName = dashboard.getLoggedInUserFullname();
+    Assert.assertNotEquals("", loggedInUserFullName);
   }
 
   @Test
@@ -33,10 +33,5 @@ public class LoginTest extends CaseBase {
     // then
     assertEquals("You are not logged in. (Log in)", mainPage.getLoginText());
     assertEquals("Skillgo Moodle", mainPage.getTitle());
-  }
-
-  private DashboardPage login() {
-    GivenLoggedIn givenLoggedIn = new GivenLoggedIn(this.driver);
-    return givenLoggedIn.login();
   }
 }

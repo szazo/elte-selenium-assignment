@@ -19,20 +19,20 @@ class MainPage extends PageBase {
      "//h3[@class='coursename']/a");
 
   public MainPage(WebDriver driver) {
-    this(driver, false);
+    this(null, driver);
   }
   
-  protected MainPage(WebDriver driver, boolean navigate) {
+  protected MainPage(String rootUrl, WebDriver driver) {
     super(driver);
 
-    if (navigate) {
-      this.driver.get("https://skillgo.io/moodle");
+    if (rootUrl != null) {
+      this.driver.get(rootUrl);
     }
     this.checkTitle("Skillgo Moodle");
   }
 
-  public static MainPage navigateToMainPage(WebDriver driver) {
-    MainPage mainPage = new MainPage(driver, true);
+  public static MainPage navigateToMainPage(String rootUrl, WebDriver driver) {
+    MainPage mainPage = new MainPage(rootUrl, driver);
     return mainPage;
   }
 
