@@ -1,28 +1,15 @@
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openqa.selenium.TimeoutException;
+
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.math.BigInteger;
-
-import org.apache.commons.compress.utils.BitInputStream;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.*;
-
-import static org.junit.Assert.assertEquals;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.mashape.unirest.http.*;
-import com.mashape.unirest.http.exceptions.*;
-
-import javax.xml.datatype.DatatypeConstants;
-
 
 class TempMailClient {
 
@@ -53,10 +40,7 @@ class TempMailClient {
     String domain = domainList.get(rand.nextInt(domainList.size()));
     int index = rand.nextInt(10000);
 
-    // generate mail address
-    String emailAddress = String.format("test%05d%s", index, domain);
-
-    return emailAddress;
+    return String.format("test%05d%s", index, domain);
   }
 
   public Email waitForEmailBySubject(String emailAddress, String subject, int timeoutMs) throws NoSuchAlgorithmException, UnirestException, TimeoutException {
@@ -76,15 +60,6 @@ class TempMailClient {
       }
     }
   }
-
-  public class Email {
-    String id;
-    String subject;
-    String from;
-    String text;
-    String html;
-  }
-
   private List<Email> getEmails(String emailMd5) throws UnirestException {
 
     HttpResponse<JsonNode> response
@@ -138,8 +113,14 @@ class TempMailClient {
   }
 
   private String url(String suffix) {
-    String url = String.format("https://%s/request/%s", this.host, suffix);
-    return url;
+    return String.format("https://%s/request/%s", this.host, suffix);
   }
 
+  public static class Email {
+    String id;
+    String subject;
+    String from;
+    String text;
+    String html;
+  }
 }

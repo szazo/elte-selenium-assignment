@@ -1,9 +1,7 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.pagefactory.ByChained;
+import org.openqa.selenium.WebDriver;
 
 public class RegistrationConfirmedPage extends PageBase {
 

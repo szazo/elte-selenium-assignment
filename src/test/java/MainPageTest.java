@@ -1,16 +1,9 @@
-import java.util.List;
-import java.util.Arrays;
-import org.junit.*;
-
-import static org.junit.Assert.assertEquals;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Assert;
+import org.junit.Test;
 import pages.MainPage;
 
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainPageTest extends CaseBase {
 
