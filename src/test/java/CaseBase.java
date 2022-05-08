@@ -7,6 +7,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CaseBase {
@@ -40,8 +42,21 @@ public class CaseBase {
     return givenLoggedIn.login();
   }
 
+  protected String randomString(String prefix, int randomLength) {
+    Random rand = new Random();
+    return String.format("%s%0" + randomLength + "d", prefix, rand.nextInt((int) Math.pow(10, randomLength)));
+  }
+
   protected String rootUrl() {
     return System.getProperty("TEST_ROOT_URL");
+  }
+
+  protected String tempMailHost() {
+    return System.getProperty("TEST_TEMPMAIL_HOST");
+  }
+
+  protected String tempMailApiKey() {
+    return System.getProperty("TEST_TEMPMAIL_APIKEY");
   }
 
   private String username() {

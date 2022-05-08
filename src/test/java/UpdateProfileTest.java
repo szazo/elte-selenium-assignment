@@ -51,11 +51,6 @@ public class UpdateProfileTest extends CaseBase {
     // Assert.assertEquals("Zoltán Szarvas", loggedInUserFullname);
   }
 
-  private String randomString(String prefix, int randomLength) {
-    Random rand = new Random();
-    return String.format("%s%0" + randomLength + "d", prefix, rand.nextInt((int) Math.pow(10, randomLength)));
-  }
-
   // @Test
   // public void logoutShouldGoBackToMainPage() {
   //   // given
