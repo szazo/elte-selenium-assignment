@@ -42,7 +42,7 @@ public class ProfilePage extends PageBase {
                                         "//dt[text()='%s']/following-sibling::dd", label)));
     }
 
-    public class ProfileDetails {
+    public static class ProfileDetails {
         public String fullName;
         public String description;
         public String country;

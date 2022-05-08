@@ -43,7 +43,9 @@ class TempMailClient {
         return String.format("test%05d%s", index, domain);
     }
 
-    public Email waitForEmailBySubject(String emailAddress, String subject, int timeoutMs) throws NoSuchAlgorithmException, UnirestException, TimeoutException {
+    public Email waitForEmailBySubject(String emailAddress,
+                                       String subject,
+                                       int timeoutMs) throws NoSuchAlgorithmException, UnirestException, TimeoutException {
         String md5Hash = this.md5Hash(emailAddress);
 
         long start = System.currentTimeMillis();
@@ -56,7 +58,8 @@ class TempMailClient {
             }
 
             if (System.currentTimeMillis() - start > timeoutMs) {
-                throw new TimeoutException(String.format("waitForEmailBySubject condition not met within %s ms", timeoutMs));
+                throw new TimeoutException
+                  (String.format("waitForEmailBySubject condition not met within %s ms", timeoutMs));
             }
         }
     }
@@ -88,10 +91,6 @@ class TempMailClient {
         }
 
         return emails;
-        //HttpResponse<String> response = Unirest.get("https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/5c0bce9a727b8c8f7ee3cd7a03a5491c/")
-        //       .header("X-RapidAPI-Host", "privatix-temp-mail-v1.p.rapidapi.com")
-        //      .header("X-RapidAPI-Key", "4bc1c48a83mshfdd317857f55020p1678cfjsn531bb38cb008")
-        //     .asString();
     }
 
     private String md5Hash(String input) throws NoSuchAlgorithmException {

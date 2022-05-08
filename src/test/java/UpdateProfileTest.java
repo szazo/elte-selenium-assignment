@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class UpdateProfileTest extends CaseBase {
 
     @Test
-    public void changeProfileShouldUpdateDetails() {
+    public void updateProfileShouldUpdateDetails() {
         // given
         DashboardPage dashboard = this.login();
         ProfilePage profilePage = dashboard.showProfile();

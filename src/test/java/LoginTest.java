@@ -9,6 +9,7 @@ public class LoginTest extends CaseBase {
 
     @Test
     public void loginShouldNavigateToDashboardWhenSucceeded() {
+
         // given, when
         DashboardPage dashboard = this.login();
 
@@ -19,6 +20,7 @@ public class LoginTest extends CaseBase {
 
     @Test
     public void logoutShouldGoBackToMainPage() {
+
         // given
         DashboardPage dashboard = this.login();
 

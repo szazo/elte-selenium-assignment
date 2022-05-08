@@ -39,27 +39,6 @@ public class RegistrationPage extends PageBase {
         waitAndReturnElement(this.registerButtonBy).submit();
     }
 
-    // public DashboardPage loginAs(String username, String password) {
-    //   this.enterUsername(username);
-    //   this.enterPassword(password);
-
-    //   this.submitLogin();
-
-    //   return new DashboardPage(this.driver);
-    // }
-
-    // private void enterUsername(String username) {
-    //   waitAndReturnElement(this.usernameBy).sendKeys(username);
-    // }
-
-    // private void enterPassword(String password) {
-    //   waitAndReturnElement(this.passwordBy).sendKeys(password);
-    // }
-
-    // private void submitLogin() {
-    //   waitAndReturnElement(this.loginButtonBy).submit();
-    // }
-
     public static class UserDetails {
         public String username;
         public String password;
