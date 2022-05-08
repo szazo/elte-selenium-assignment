@@ -9,6 +9,7 @@ class LoginPage extends PageBase {
   private By usernameBy = new ByChained(loginFormBy, By.xpath("//input[@id='username']"));
   private By passwordBy = new ByChained(loginFormBy, By.xpath("//input[@id='password']"));
   private By loginButtonBy = new ByChained(loginFormBy, By.xpath("button[@id='loginbtn']"));
+  private By registrationButtonBy = By.xpath("//form[@id='signup']/button[@type='submit']");
 
   public LoginPage(WebDriver driver) {
     super(driver);
@@ -35,5 +36,10 @@ class LoginPage extends PageBase {
 
   private void submitLogin() {
     waitAndReturnElement(this.loginButtonBy).submit();
+  }
+
+  public RegistrationPage gotoRegistration() {
+    waitAndReturnElement(this.registrationButtonBy).click();
+    return new RegistrationPage(this.driver);
   }
 }
