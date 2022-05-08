@@ -18,7 +18,7 @@ public class RegistrationTest extends CaseBase {
 
   @Ignore
   @Test
-  public void shouldRegister() throws Exception {
+  public void shouldRegisterUsingConfirmation() throws Exception {
     // given
     String emailAddress = tempMailClient.generateEmailAddress();
 
@@ -47,8 +47,6 @@ public class RegistrationTest extends CaseBase {
 
     // then
     Assert.assertEquals(details.firstname + " " + details.lastname, dashboardPage.getLoggedInUserFullName());
-
-    Thread.sleep(4000);
   }
 
   private RegistrationPage navigateToRegistrationPage() {
